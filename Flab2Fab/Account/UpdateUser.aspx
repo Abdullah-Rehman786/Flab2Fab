@@ -6,9 +6,6 @@
     <p class="text-danger">
         <asp:Literal runat="server" ID="ErrorMessage" />
     </p>
-<%--    <div class="form-row">
-        <asp:Button runat="server" ID="btnEdit" Text="Edit" CssClass="btn btn-secondary" OnClientClick="return btnSubmitUpdates();" />
-    </div>--%>
     <div class="form-row">
         <asp:Label runat="server" for="txtName"><b>Name</b></asp:Label>
         <asp:TextBox runat="server" ID="txtName" ClientIDMode="Static" />

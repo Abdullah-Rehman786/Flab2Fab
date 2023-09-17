@@ -14,12 +14,15 @@ namespace Flab2Fab.Account
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            IUserDataAccess _userDataAccess = new UserDataAccess();
-            DataTable dt = _userDataAccess.GetUpdateableUserInfo(User.Identity.GetUserId());
-            txtName.Text = dt.Rows[0]["Name"].ToString();
-            txtPhone.Text = dt.Rows[0]["PhoneNumber"].ToString();
-            chkAnonymous.Checked = Convert.ToBoolean(dt.Rows[0]["Anonymous"]);
-            chkPaid.Checked = Convert.ToBoolean(dt.Rows[0]["Paid"]);
+            if(!IsPostBack)
+            {
+                IUserDataAccess _userDataAccess = new UserDataAccess();
+                DataTable dt = _userDataAccess.GetUpdateableUserInfo(User.Identity.GetUserId());
+                txtName.Text = dt.Rows[0]["Name"].ToString();
+                txtPhone.Text = dt.Rows[0]["PhoneNumber"].ToString();
+                chkAnonymous.Checked = Convert.ToBoolean(dt.Rows[0]["Anonymous"]);
+                chkPaid.Checked = Convert.ToBoolean(dt.Rows[0]["Paid"]);
+            }
         }
 
         protected void BtnUpdate_Click(object sender, EventArgs e)

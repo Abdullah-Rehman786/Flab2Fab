@@ -6,33 +6,36 @@
     <p class="text-danger">
         <asp:Literal runat="server" ID="ErrorMessage" />
     </p>
+<%--    <div class="form-row">
+        <asp:Button runat="server" ID="btnEdit" Text="Edit" CssClass="btn btn-secondary" OnClientClick="return btnSubmitUpdates();" />
+    </div>--%>
     <div class="form-row">
         <asp:Label runat="server" for="txtName"><b>Name</b></asp:Label>
-        <asp:TextBox runat="server" ID="txtName" readonly="true" ClientIDMode="Inherit" />
+        <asp:TextBox runat="server" ID="txtName" ClientIDMode="Static" />
         <asp:RequiredFieldValidator runat="server" ControlToValidate="txtName"
             CssClass="text-danger" Display="Dynamic" ErrorMessage="The Name field is required." />
         <button type="button" class="minimalist-button">Edit</button>
     </div>
     <div class="form-row">
         <asp:Label runat="server" for="txtPhone"><b>Phone</b></asp:Label>
-        <asp:TextBox runat="server" ID="txtPhone" readonly="true" ClientIDMode="Inherit" />
+        <asp:TextBox runat="server" ID="txtPhone" ClientIDMode="Static" />
         <asp:RequiredFieldValidator runat="server" ControlToValidate="txtPhone"
             CssClass="text-danger" Display="Dynamic" ErrorMessage="The Phone field is required." />
         <button type="button" class="minimalist-button">Edit</button>
     </div>
     <div class="form-row">
         <asp:Label runat="server" for="chkAnonymous"><b>Anonymous User</b></asp:Label>
-        <asp:CheckBox runat="server" ID="chkAnonymous" readonly="true" ClientIDMode="Inherit" />
+        <asp:CheckBox runat="server" ID="chkAnonymous" ClientIDMode="Static" />
         <button type="button" class="minimalist-button">Edit</button>
     </div>
     <div class="form-row">
         <asp:Label runat="server" for="chkPaid"><b>Paid Dues</b></asp:Label>
-        <asp:CheckBox runat="server" ID="chkPaid" readonly="true" ClientIDMode="Inherit" />
+        <asp:CheckBox runat="server" ID="chkPaid" ClientIDMode="Static" />
         <button type="button" class="minimalist-button">Edit</button>
     </div>
     <div class="form-row">
-    <asp:Button runat="server" Text="Update" CssClass="btn btn-primary" OnClick="BtnUpdate_Click" />
-</div>
+        <asp:Button runat="server" ID="btnSubmitUpdates" Text="Update" CssClass="btn btn-primary" OnClientClick="return btnSubmitUpdates();" OnClick="BtnUpdate_Click" />
+    </div>
     <style type="text/css">
         /* Define a common class for form rows to make styling uniform */
         .form-row {
@@ -42,12 +45,12 @@
             margin: 10px 0;
         }
 
-        /* Style labels */
-        .form-row span {
-            font-weight: bold;
-            margin-right: 2px; /* Increase the space between label and input */
-            flex: 0; /* Allow labels to grow and occupy available space */
-        }
+            /* Style labels */
+            .form-row span {
+                font-weight: bold;
+                margin-right: 2px; /* Increase the space between label and input */
+                flex: 0; /* Allow labels to grow and occupy available space */
+            }
 
         span {
             font-size: 14px;
@@ -75,16 +78,16 @@
             margin-left: 2px; /* Adjust the space between input and button */
         }
 
-        .form-row button.minimalist-button text {
-    background-color: rgba(169, 169, 169, 0.12);
-    border: 1px solid #ccc;
-    border-radius: 3px;
-    padding: 3px 8px;
-    font-size: 8px;
-    cursor: pointer;
-    flex: 0; /* Prevent buttons from growing; they will maintain their size */
-    margin-left: 2px; /* Adjust the space between input and button */
-}
+            .form-row button.minimalist-button text {
+                background-color: rgba(169, 169, 169, 0.12);
+                border: 1px solid #ccc;
+                border-radius: 3px;
+                padding: 3px 8px;
+                font-size: 8px;
+                cursor: pointer;
+                flex: 0; /* Prevent buttons from growing; they will maintain their size */
+                margin-left: 2px; /* Adjust the space between input and button */
+            }
 
 
         input[type="text"]:focus, input[type="checkbox"]:focus {
@@ -99,8 +102,21 @@
         }
     </style>
     <script type="text/javascript">
+
+        function btnSubmitUpdates() {
+
+            var chkAnonymous = $("#chkAnonymous");
+            chkAnonymous.prop('disabled', false);
+
+            var chkPaid = $("#chkPaid");
+            chkPaid.prop('disabled', false);
+
+            return true;
+        }
+
         $(document).ready(function () {
             $("input[type='checkbox']").prop("disabled", true);
+            $("input[type='text']").prop("readonly", true);
 
             $(".minimalist-button").on("click", function () {
                 var formRow = $(this).closest(".form-row");
@@ -113,9 +129,6 @@
                         return !value;
                     });
                     textField.focus();
-
-                    var editedValue = textField.prop('checked'); // Get the edited value
-                    textField.prop('checked', editedValue); // Use .prop() to set the checked state
 
                     textField.on("blur", function () {
                         $(this).prop("disabled", true);
@@ -131,37 +144,11 @@
                         this.setSelectionRange(this.value.length, this.value.length);
                     });
 
-                    var editedValue = textField.val(); // Get the edited value
-                    textField.val(editedValue);
-
                     textField.on("blur", function () {
                         $(this).prop("readonly", true);
                     });
                 }
             });
-
-        //    $(".minimalist-button").on("click", function () {
-        //        var formRow = $(this).closest(".form-row");
-        //        var textField = formRow.find("input[type='text'], input[type='checkbox']");
-        //        var isReadOnly = textField.prop("readonly");
-
-        //        if (isReadOnly) {
-        //            // If it's currently readonly, make it editable
-        //            textField.prop("readonly", false);
-        //            textField.focus();
-        //            if (textField.is("input[type='text']")) {
-        //                textField[0].selectionStart = textField[0].selectionEnd = textField.val().length;
-        //            }
-        //        } else {
-        //            // If it's currently editable, make it readonly
-        //            textField.prop("readonly", true);
-        //        }
-
-        //        // Add a blur event listener to the input field
-        //        textField.on("blur", function () {
-        //            $(this).prop("readonly", true);
-        //        });
-        //    });
         });
 
     </script>

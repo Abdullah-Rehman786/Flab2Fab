@@ -26,11 +26,11 @@
                     <dd>
                         <asp:HyperLink NavigateUrl="/Account/UpdateUser" Text="[Update]" Visible="true" ID="UpdateUser" runat="server" />
                     </dd>
-                    <dt>External Logins:</dt>
+                    <%--<dt>External Logins:</dt>
                     <dd><%: LoginsCount %>
                         <asp:HyperLink NavigateUrl="/Account/ManageLogins" Text="[Manage]" runat="server" />
 
-                    </dd>
+                    </dd>--%>
                     <%--
                         Phone Numbers can used as a second factor of verification in a two-factor authentication system.
                         See <a href="https://go.microsoft.com/fwlink/?LinkId=403804">this article</a>
@@ -55,7 +55,7 @@
                     <% } %>
                     --%>
 
-                    <dt>Two-Factor Authentication:</dt>
+                   <%-- <dt>Two-Factor Authentication:</dt>
                     <dd>
                         <p>
                             There are no two-factor authentication providers configured. See <a href="https://go.microsoft.com/fwlink/?LinkId=403804">this article</a>
@@ -63,19 +63,19 @@
                         </p>
                         <% if (TwoFactorEnabled)
                             { %>
-                        <%--
+                        
                         Enabled
                         <asp:LinkButton Text="[Disable]" runat="server" CommandArgument="false" OnClick="TwoFactorDisable_Click" />
-                        --%>
+                        
                         <% }
                             else
                             { %>
-                        <%--
+                        
                         Disabled
                         <asp:LinkButton Text="[Enable]" CommandArgument="true" OnClick="TwoFactorEnable_Click" runat="server" />
-                        --%>
+                        
                         <% } %>
-                    </dd>
+                    </dd>--%>
                 </dl>
             </div>
         </div>
